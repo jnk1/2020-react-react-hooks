@@ -1,3 +1,7 @@
+# このリポジトリは
+https://www.udemy.com/course/2020-react-react-hooks/
+の講座を再現したものです
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
