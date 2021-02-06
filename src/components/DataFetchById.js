@@ -11,7 +11,6 @@ function DataFetchById() {
     const item = await response.json();
     setPost(item);
     setLoading(false);
-    console.log('fetchData');
   };
 
   useEffect(() => {
