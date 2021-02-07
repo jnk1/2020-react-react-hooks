@@ -1,6 +1,6 @@
 # このリポジトリは
 https://www.udemy.com/course/2020-react-react-hooks/
-の講座を再現したものです
+の講座を参考にしたものです
 
 # Getting Started with Create React App
 
