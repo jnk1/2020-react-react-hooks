@@ -1,38 +1,55 @@
-import React, { createContext, useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import './App.css';
-import ComponentA from './components/ComponentA';
-import ComponentB from './components/ComponentB';
-import ComponentC from './components/ComponentC';
+import axios from 'axios';
 
-export const CountContext = createContext();
 const initialState = {
-  firstCounter: 0,
+  loading: true,
+  error: '',
+  post: {},
 };
+
 const reducer = (state, action) => {
   switch(action.type) {
-    case 'increment1':
-      return {...state, firstCounter: state.firstCounter + action.value};
-    case 'decrement1':
-      return {...state, firstCounter: state.firstCounter - action.value};
-    case 'reset':
-      return initialState;
+    case 'FETCH_SUCCESS':
+      return {
+        loading: false,
+        error: '',
+        post: action.payload,
+      };
+    case 'FETCH_ERROR':
+      return {
+        loading: false,
+        error: 'データの取得に失敗しました',
+        post: {},
+      };
     default:
       return state;
   }
-};
+}
 
 function App() {
-  const [count, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [num, setNum] = useState(Math.floor(Math.random() * 11))
+  const onClick = () => setNum(Math.floor(Math.random() * 11));
+
+  useEffect(() => {
+    axios
+      .get(`http://jsonplaceholder.typicode.com/posts/${num}`)
+      .then(res => {
+        dispatch({ type: 'FETCH_SUCCESS', payload: res.data })
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCH_ERROR' })
+      })
+  }, [num]);
+
   return (
     <div className="App">
-      <h1>カウント: {count.firstCounter}</h1>
-      <CountContext.Provider
-        value={{ countState: count, countDispatch: dispatch }}
-      >
-        <ComponentA />
-        <ComponentB />
-        <ComponentC />
-      </CountContext.Provider>
+      <h1>{state.loading ? 'Loading...' : state.post.title}</h1>
+      <p>{state.loading ? 'Loading...' : state.post.body}</p>
+      <h2>{state.error ? state.error : null}</h2>
+      <p>{num}</p>
+      <button onClick={onClick}>ガチャガチャ</button>
     </div>
   );
 }
