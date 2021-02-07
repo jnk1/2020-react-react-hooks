@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { CountContext } from '../App';
 
-function ComponentC() {
+function ComponentA() {
   const countContext = useContext(CountContext);
   return (
     <div>
-      <h1>ComponentC</h1>
+      <h1>ComponentA</h1>
       <button onClick={() => countContext.countDispatch({ type: 'increment1', value: 1 })}>increment1</button>
       <button onClick={() => countContext.countDispatch({ type: 'decrement1', value: 1 })}>decrement1</button>
       <button onClick={() => countContext.countDispatch({ type: 'reset' })}>reset</button>
@@ -13,4 +13,4 @@ function ComponentC() {
   )
 }
 
-export default ComponentC;
+export default ComponentA;
